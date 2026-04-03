@@ -1,23 +1,16 @@
 apiVersion: v1
-kind: Service   # Service exposes your app to outside world
+kind: Service
 
 metadata:
-  name: devops-service   # Name of service (can keep same)
+  name: devops-service
 
 spec:
   type: LoadBalancer
-  # 👆 IMPORTANT:
-  # AWS will create a Load Balancer automatically
-  # This gives you PUBLIC URL
 
   selector:
     app: devops-app
-    # 👆 Must match deployment label (VERY IMPORTANT)
 
   ports:
     - protocol: TCP
       port: 80
-      # 👆 Public port (users access this)
-
       targetPort: 3000
-      # 👆 Container port (your app runs here)
