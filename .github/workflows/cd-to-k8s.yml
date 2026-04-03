@@ -1,1 +1,39 @@
+name: Deploy to EKS   # Workflow name
 
+on:
+  workflow_dispatch   # Manual trigger (button in GitHub)
+  repository_dispatch:
+    types: [deploy]   # Will be triggered from app repo later
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest   # GitHub runner machine
+
+    steps:
+
+    - name: Checkout Code
+      uses: actions/checkout@v3
+      # 👆 Pulls your repo code (deployment.yaml, service.yaml)
+
+    - name: Install kubectl
+      run: |
+        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+        chmod +x kubectl
+        sudo mv kubectl /usr/local/bin/
+      # 👆 Installs kubectl (used to talk to Kubernetes)
+
+    - name: Install AWS CLI
+      run: sudo apt-get update && sudo apt-get install -y awscli
+      # 👆 Installs AWS CLI
+
+    - name: Configure AWS
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        aws eks --region ap-south-1 update-kubeconfig --name devops-cluster
+      # 👆 Connects to your EKS cluster
+
+    - name: Deploy to EKS
+      run: kubectl apply -f .
+      # 👆 Applies all YAML files → deploys app
