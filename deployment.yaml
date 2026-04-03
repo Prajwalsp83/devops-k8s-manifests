@@ -21,9 +21,6 @@ spec:
     spec:
       containers:
       - name: devops-container
-
-        image: praj83/devops-app:latest
-        imagePullPolicy: Always   # 🔥 VERY IMPORTANT (forces new image pull)
-
+        image: praj83/devops-app:v1   # 🔥 will be auto-updated
         ports:
         - containerPort: 3000
