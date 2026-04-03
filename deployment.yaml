@@ -1,34 +1,29 @@
-apiVersion: apps/v1   # Kubernetes API for Deployment
-kind: Deployment      # We are creating a Deployment (manages pods)
+apiVersion: apps/v1
+kind: Deployment
 
 metadata:
-  name: devops-app    # Name of your app (you can keep this same)
-
+  name: devops-app
   labels:
-    app: devops-app   # Label used to identify your app
+    app: devops-app
 
 spec:
-  replicas: 2         # Number of pods (2 copies of your app running)
+  replicas: 2
 
   selector:
     matchLabels:
-      app: devops-app   # Must match below template labels (VERY IMPORTANT)
+      app: devops-app
 
   template:
     metadata:
       labels:
-        app: devops-app   # Pod label (must match selector above)
+        app: devops-app
 
     spec:
       containers:
-      - name: devops-container   # Container name (any name is fine)
+      - name: devops-container
 
-        image: praj83/devops-app:latest  
-        # 👆 IMPORTANT:
-        # This is your Docker image
-        # Format: <docker-username>/<image-name>:<tag>
-        # You can keep 'latest' for now (we will automate later)
+        image: praj83/devops-app:latest
+        imagePullPolicy: Always   # 🔥 VERY IMPORTANT (forces new image pull)
 
         ports:
         - containerPort: 3000
-        # 👆 Your app is running on port 3000 inside container
