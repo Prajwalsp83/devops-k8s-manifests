@@ -21,6 +21,6 @@ spec:
     spec:
       containers:
       - name: devops-container
-        image: praj83/devops-app:v1   # 🔥 will be auto-updated
+        image: praj83/devops-app:v12
         ports:
         - containerPort: 3000
