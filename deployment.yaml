@@ -21,6 +21,6 @@ spec:
     spec:
       containers:
       - name: devops-container
-        image: praj83/devops-app:v12
+        image: praj83/devops-app:v13
         ports:
         - containerPort: 3000
