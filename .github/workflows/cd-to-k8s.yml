@@ -1,7 +1,7 @@
 name: Deploy to EKS   # Workflow name
 
 on:
-  workflow_dispatch   # Manual trigger (button in GitHub)
+  workflow_dispatch:   # Manual trigger (button in GitHub)
   repository_dispatch:
     types: [deploy]   # Will be triggered from app repo later
 
